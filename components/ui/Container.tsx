@@ -1,4 +1,4 @@
-import { ChildrenProps } from "./interfaces";
+import { ChildrenProps } from "../../utils/interfaces";
 
 const Container: React.FC<ChildrenProps> = ({ children }) => {
   return (

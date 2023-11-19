@@ -1,7 +1,7 @@
-import HomeBanner from "@/components/Banner/HomeBanner";
+import HomeBanner from "@/components/ui/HomeBanner";
 import ProductCard from "@/components/products/ProductCard";
 import truncateText from "@/functions/truncateText";
-import Container from "@/utils/Container";
+import Container from "@/components/ui/Container";
 import { products } from "@/utils/products";
 import Image from "next/image";
 
