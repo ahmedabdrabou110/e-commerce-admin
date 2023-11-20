@@ -1,3 +1,4 @@
+import { UseFormRegister, FieldErrors, FieldValues } from "react-hook-form";
 import { IconType } from "react-icons";
 
 export interface ChildrenProps {
@@ -83,4 +84,14 @@ export interface Props {
 
 export interface ItemContentProps {
   item: CartProductProps;
+}
+
+export interface InputProps {
+  id: string;
+  label: string;
+  required?: boolean;
+  disabled?: boolean;
+  type?: string;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors;
 }

@@ -39,8 +39,8 @@ const Button: React.FC<ButtonProps> = ({
       }
     `}
     >
-      {label}
       {Icon && <Icon size={24} />}
+      {label}
     </button>
   );
 };
