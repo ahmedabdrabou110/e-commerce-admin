@@ -1,3 +1,4 @@
+import { SafeUser } from "@/types";
 import { UseFormRegister, FieldErrors, FieldValues } from "react-hook-form";
 import { IconType } from "react-icons";
 
@@ -94,4 +95,21 @@ export interface InputProps {
   type?: string;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
+}
+
+export interface MenuItemProps {
+  children: React.ReactNode;
+  onClick: () => void;
+}
+
+export interface BackDropProps {
+  onClick: () => void;
+}
+
+export interface UserMenuProps {
+  currentUser: SafeUser | null | undefined;
+}
+
+export interface LoginFormProps {
+  currentUser: SafeUser | null | undefined;
 }

@@ -1,14 +1,26 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Heading from "../ui/Heading";
 import { Input } from "../ui/Input";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import Button from "../ui/Button";
 import Link from "next/link";
 import { AiOutlineGoogle } from "react-icons/ai";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { LoginFormProps } from "@/utils/interfaces";
 
-const RegisterForm = () => {
+const RegisterForm: React.FC<LoginFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/cart");
+      router.refresh();
+    }
+  }, []);
   const {
     register,
     handleSubmit,
@@ -22,16 +34,46 @@ const RegisterForm = () => {
   });
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    console.log(data);
+    axios.post("/api/register", data).then(() => {
+      toast.success("Account Created");
+
+      signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.ok) {
+            router.push("/cart");
+            router.refresh();
+            toast.success("Logged in");
+          }
+
+          if (callback?.error) {
+            toast.error(callback?.error);
+          }
+        })
+        .catch(() => {
+          toast.error("Something went wrong");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    });
   };
+
+  if (currentUser) {
+    return <p className="text-center">Logged In. Redirecting ...</p>;
+  }
+
   return (
     <>
       <Heading title="Sign up for Almasa " center />
       <Button
         outline
         icon={AiOutlineGoogle}
-        label="Sign Up with google"
-        onClick={() => {}}
+        label="Continue with google"
+        onClick={() => signIn("google")}
       />
       <hr className="bg-slate-300  w-full h-px" />
       <Input
